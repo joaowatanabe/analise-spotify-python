@@ -23,12 +23,12 @@ def agrupar_generos():
     print("Em construção...")
 
 def top_musicas():
-  titulo("Top Músicas Mais Populares")
-  print("Em construção...")
+    titulo("Top Músicas Mais Populares")
+    print("Em construção...")
 
 def comparar_generos():
-  titulo("Comparar Gêneros")
-  print("Em construção...")
+    titulo("Comparar Gêneros")
+    print("Em construção...")
 
 def artistas_conjuntos():
     titulo("Artistas em Comum entre Gêneros")
