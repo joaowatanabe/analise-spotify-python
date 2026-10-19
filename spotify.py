@@ -20,7 +20,29 @@ def titulo(texto):
 
 def agrupar_generos():
     titulo("Popularidade Média por Gênero (Top 15)")
-    print("Em construção...")
+
+    soma_popularidade = {}
+    quantidade_genero = {}
+    media = {}
+
+    for musica in musicas:
+        genero = musica["track_genre"]
+        popularidade = int(musica["popularity"])
+
+        soma_popularidade[genero] = soma_popularidade.get(genero, 0) + popularidade
+        quantidade_genero[genero] = quantidade_genero.get(genero, 0) + 1
+
+    for genero, total in soma_popularidade.items():
+        media[genero] = total / quantidade_genero[genero]
+
+    ranking = sorted(media.items(), key=lambda item: item[1], reverse=True)
+
+    print(f"{'Nº':>3}  {'Gênero':20s} {'Média':>5}")
+    print("-" * 62)
+    for posicao, (genero, valor) in enumerate(ranking[:15], start=1):
+        barra = "█" * int(valor / 2)
+        print(f"{posicao:2d}º  {genero:20s} {valor:5.1f}  {barra}")
+
 
 def top_musicas():
     titulo("Top Músicas Mais Populares")
@@ -53,6 +75,7 @@ opcoes = {
 
 while True:
     titulo("Análise de Músicas do Spotify")
+    print("114 mil faixas · 114 gêneros · catálogo global · coleta 2022-2023")
 
     print("1. Popularidade média por gênero")
     print("2. Top músicas mais populares")
