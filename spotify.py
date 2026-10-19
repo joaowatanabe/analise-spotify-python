@@ -1,7 +1,5 @@
 import csv
 
-# PASSO 1: carregar o CSV numa lista de dicionários
-# Cada linha do arquivo vira um dicionário: {'track_name': 'Comedy', 'artists': 'Gen Hoshino', ...}
 musicas = []
 
 with open("spotify-tracks.csv", mode="r", encoding="utf-8") as arq:
@@ -11,8 +9,6 @@ with open("spotify-tracks.csv", mode="r", encoding="utf-8") as arq:
 
 print(f"Total de músicas carregadas: {len(musicas)}")
 
-
-# PASSO 2: função de título + esqueleto do menu
 def titulo(texto):
     print()
     print(texto)
@@ -43,10 +39,28 @@ def agrupar_generos():
         barra = "█" * int(valor / 2)
         print(f"{posicao:2d}º  {genero:20s} {valor:5.1f}  {barra}")
 
-
 def top_musicas():
     titulo("Top Músicas Mais Populares")
-    print("Em construção...")
+
+    n = int(input("Quantas músicas? "))
+
+    ranking = sorted(musicas, key=lambda musica: int(musica["popularity"]), reverse=True)
+
+    ja_vistas = set()
+    posicao = 0
+    print(f"{'Nº':>3}  {'Música':35s} {'Artista':25s} {'Pop.':>4}")
+    print("-" * 70)
+
+    for musica in ranking:
+        if musica["track_id"] in ja_vistas:
+            continue
+        ja_vistas.add(musica["track_id"])
+        posicao += 1
+        print(f"{posicao:2d}º  {musica['track_name'][:35]:35s} {musica['artists'][:25]:25s} {musica['popularity']:>4}")
+
+        if posicao == n:
+            break
+
 
 def comparar_generos():
     titulo("Comparar Gêneros")
@@ -76,7 +90,7 @@ opcoes = {
 while True:
     titulo("Análise de Músicas do Spotify")
     print("114 mil faixas · 114 gêneros · catálogo global · coleta 2022-2023")
-
+    print(" ")
     print("1. Popularidade média por gênero")
     print("2. Top músicas mais populares")
     print("3. Comparar gêneros")
